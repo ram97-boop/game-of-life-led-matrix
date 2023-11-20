@@ -130,7 +130,7 @@ void displayMatrix() {
       }
     }
 
-    delay(3);
+    delay(2);
     for (uint8_t c : cols) {
       digitalWrite(c, HIGH);
     }
