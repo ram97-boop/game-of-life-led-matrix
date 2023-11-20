@@ -5,7 +5,6 @@ const uint8_t rows[len] = {
 const uint8_t cols[len] = {
   7, 4, 3, 5, 2, 6, 8, 9
 };
-
 uint8_t matrix[len][len] = {
   {0, 0, 0, 0, 0, 0, 0, 0},
   {0, 0, 0, 1, 0, 0, 0, 0},
@@ -16,6 +15,7 @@ uint8_t matrix[len][len] = {
   {0, 0, 0, 0, 0, 0, 0, 0},
   {0, 0, 0, 0, 0, 0, 0, 0}
 };
+const uint8_t buttonPin = 15;
 
 
 void setup() {
@@ -27,13 +27,27 @@ void setup() {
     // make the col pins (i.e. the cathodes) high to ensure that the LEDS are off.
     digitalWrite(cols[pin], HIGH);
   }
+
+  pinMode(buttonPin, INPUT);
 }
 
 void loop() {
-  for (int i=0; i<5; i++) {
+  for (uint8_t i=0; i<5; i++) {
     displayMatrix();
   }
   nextGeneration();
+
+  if (digitalRead(buttonPin) == HIGH) {
+    generateRandomWorld();
+  }
+}
+
+void generateRandomWorld() {
+  for (uint8_t x=0; x<len; x++) {
+    for (uint8_t y=0; y<len; y++) {
+      matrix[x][y] = random(2);
+    }
+  }
 }
 
 
@@ -50,7 +64,7 @@ uint8_t getLiveNeighboursAmount(uint8_t x, uint8_t y) {
     {1, 1},
   };
 
-  for (int n=0; n<8; n++) {
+  for (uint8_t n=0; n<8; n++) {
     uint8_t neighbourX = (neighboursRelativeCoords[n][0] + x + len) % len;
     uint8_t neighbourY = (neighboursRelativeCoords[n][1] + y + len) % len;
 
@@ -113,11 +127,13 @@ void displayMatrix() {
     for (uint8_t c=0; c<len; c++) {
       if (matrix[r][c]) {
         digitalWrite(cols[c], LOW);
-        delay(4);
-        digitalWrite(cols[c], HIGH);
       }
     }
 
+    delay(3);
+    for (uint8_t c : cols) {
+      digitalWrite(c, HIGH);
+    }
     digitalWrite(rows[r], LOW);
   }
 }
