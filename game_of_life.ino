@@ -20,9 +20,10 @@ uint8_t matrix[len][len] = {
   {0, 0, 0, 0, 0, 0, 0, 0}
 };
 
-uint8_t get_live_neighbours_amount(uint8_t x, uint8_t y) {
-  uint8_t live_neighbours = 0;
-  uint8_t neighbour_relative_coords[8][2] = {
+
+uint8_t getLiveNeighboursAmount(uint8_t x, uint8_t y) {
+  uint8_t liveNeighbours = 0;
+  uint8_t neighboursRelativeCoords[8][2] = {
     {-1, -1},
     {-1, 0},
     {-1, 1},
@@ -33,8 +34,23 @@ uint8_t get_live_neighbours_amount(uint8_t x, uint8_t y) {
     {1, 1},
   };
 
+  for (int n=0; n<8; n++) {
+    uint8_t neighbourX = (neighboursRelativeCoords[n][0] + x + 8) % 8;
+    uint8_t neighbourY = (neighboursRelativeCoords[n][1] + y + 8) % 8;
+
+    if (matrix[neighbourX][neighbourY]) {
+      liveNeighbours++;
+    }
+  }
+
+  return liveNeighbours;
+}
+
+
+void cellNextStage(uint8_t x, uint8_t y, uint8_t (&newMatrix)[8][8]) {
 
 }
+
 
 void cleanMatrix() {
   for (uint8_t r=0; r<len; r++) {
@@ -71,8 +87,6 @@ void setup() {
 
     // make the col pins (i.e. the cathodes) high to ensure that the LEDS are off.
     digitalWrite(cols[pin], HIGH);
-    Serial.begin(9600);
-    Serial.print("Hello");
   }
 }
 
