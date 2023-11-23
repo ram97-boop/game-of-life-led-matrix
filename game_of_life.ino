@@ -111,15 +111,6 @@ void nextGeneration() {
 }
 
 
-void cleanMatrix() {
-  for (uint8_t r=0; r<len; r++) {
-    for (uint8_t c=0; c<len; c++) {
-      matrix[r][c] = 0;
-    }
-  }
-}
-
-
 void displayMatrix() {
   for (uint8_t r=0; r<len; r++) {
     digitalWrite(rows[r], HIGH);
