@@ -1,5 +1,6 @@
 # Conway's Game of Life on an 8x8 LED matrix
 
+## Demo (if video doesn't play try opening in a new tab)
 https://github.com/ram97-boop/game-of-life-led-matrix/assets/65606723/42c81ed0-d126-4800-8426-bcfe44624798
 
 <br/>
